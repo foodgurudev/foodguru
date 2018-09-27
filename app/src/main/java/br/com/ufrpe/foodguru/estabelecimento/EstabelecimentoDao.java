@@ -11,6 +11,11 @@ public class EstabelecimentoDao {
         dao.child("estabelecimento").push().setValue(estabelecimento);
 
     }
+    public void atualizaEstabelecimento(Estabelecimento estabelecimento){
+        DatabaseReference dao = FirebaseDatabase.getInstance().getReference();
+        dao.child("estabelecimento").child(estabelecimento.getId()).setValue(estabelecimento);
+
+    }
 
 
 
