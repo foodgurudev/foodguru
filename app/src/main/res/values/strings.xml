@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Food Guru</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="cadastrese">Não tem uma conta? <u>Cadastre-se!</u></string>
+    <string name="esqueci_minha_senha"><u>Esqueci minha senha</u></string>
+    <string name="entrar"><b>ENTRAR</b></string>
+    <string name="alerta_campo_vazio">Preencha o campo vazio.</string>
+    <string name="sp_excecao_email">Informe um email válido.</string>
+    <string name="sp_excecao_senha">Digite uma senha mais forte, contendo no mínimo 6 caracteres.</string>
+    <string name="sp_excecao_senhas_iguais">Digite senhas iguais</string>
+    <string name="sp_excecao_campo_vazio">Preencha o campo vazio</string>
 </resources>
