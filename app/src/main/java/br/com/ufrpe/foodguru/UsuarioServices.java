@@ -2,9 +2,9 @@ package br.com.ufrpe.foodguru;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class UsuarioDAO {
+public class UsuarioServices {
     private FirebaseAuth mAuth;
-    public UsuarioDAO(){
+    public UsuarioServices(){
         mAuth = FirebaseAuth.getInstance();
     }
 

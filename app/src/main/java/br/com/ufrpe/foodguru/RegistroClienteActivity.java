@@ -1,23 +1,18 @@
 package br.com.ufrpe.foodguru;
 
-import android.app.ProgressDialog;
-import android.opengl.Visibility;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegistroClienteActivity extends AppCompatActivity implements View.OnClickListener{
-    private static final String TAG = "EmailSenha";
     private EditText nomeClienteReg;
     private EditText emailClienteReg;
     private EditText senhaClienteReg;
@@ -67,7 +62,6 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
     }
 
     public void confirmarCadastro(String email, String senha){
-        Log.d(TAG, "criarConta:" + email);
         if (!validarCampos()){
             return;
         }
@@ -79,7 +73,6 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
                             adicionarUsuario();
                         }else{
                             Helper.criarToast(RegistroClienteActivity.this, "Informe um email válido.");
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
                         }
                     }
                 });
@@ -94,7 +87,6 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                    Log.d(TAG, "createUserWithEmail:success");
                     Helper.criarToast(RegistroClienteActivity.this,"Registro conluído com sucesso.");
                 }
             }
@@ -104,7 +96,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_confirmar_cadastro:
+            case R.id.btn_confirmar_cadastro_cliente:
                 confirmarCadastro(emailClienteReg.getText().toString(),
                         senhaClienteReg.getText().toString());
                 break;

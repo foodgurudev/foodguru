@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:label="Food Guru"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,7 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegistroClienteActivity"></activity>
+        <activity android:name=".RegistroClienteActivity" />
+        <activity android:name=".TipoCadastroActivity" />
+        <activity android:name=".RegistroEstabelecimentoActivity" />
+        <activity android:name=".RecuperarSenhaActivity"></activity>
     </application>
 
 </manifest>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".RegistroClienteActivity">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,20 +16,17 @@
             android:orientation="vertical">
             <EditText
                 android:id="@+id/etNomeCliente"
-                android:hint="Nome"
+
                 android:layout_width="match_parent"
                 android:layout_height="55sp"
                 android:singleLine="true"
+                android:hint="Nome"
+                android:textColorHint="@color/Cinza"
+                android:textColor="@color/Cinza"
+                android:drawableLeft="@drawable/ic_nome"
+                android:drawableTint="@color/RoxoFoodGuru"
                 android:drawablePadding="15sp"
                 android:padding="15sp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1sp"
-                android:background="@color/colorPrimary"
-                android:layout_marginLeft="15sp"
-                android:layout_marginRight="15sp"/>
-
 
             <EditText
                 android:id="@+id/etEmailCliente"
@@ -37,40 +35,32 @@
                 android:layout_height="55sp"
                 android:singleLine="true"
                 android:hint="Email"
+                android:textColorHint="@color/Cinza"
+                android:textColor="@color/Cinza"
+                android:drawableLeft="@drawable/ic_email"
+                android:drawableTint="@color/RoxoFoodGuru"
+
                 android:drawablePadding="15sp"
                 android:padding="15sp"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1sp"
-                android:layout_marginLeft="15sp"
-                android:layout_marginRight="15sp"/>
 
             <EditText
                 android:id="@+id/etSenhaCliente"
-                android:padding="15sp"
+
                 android:layout_width="match_parent"
                 android:layout_height="55sp"
                 android:singleLine="true"
 
                 android:hint="Senha"
-                android:inputType="textPassword"/>
-                <!--
-                android:background="@color/Branco"
-
                 android:textColorHint="@color/Cinza"
                 android:textColor="@color/Cinza"
 
-                android:drawableLeft="@drawable/icone_senha"
-                android:drawableTint="@color/Laranja"
+                android:drawableLeft="@drawable/ic_senha"
+                android:drawableTint="@color/RoxoFoodGuru"
 
                 android:drawablePadding="15sp"
                 android:padding="15sp"
-                -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1sp"
-                android:layout_marginLeft="15sp"
-                android:layout_marginRight="15sp"/>
+
+                android:inputType="textPassword"/>
 
             <EditText
                 android:id="@+id/etConfirmarSenhaCliente"
@@ -79,39 +69,37 @@
                 android:layout_height="55sp"
                 android:singleLine="true"
 
-
                 android:hint="Confirme sua Senha"
+                android:textColorHint="@color/Cinza"
+                android:textColor="@color/Cinza"
 
+                android:drawableLeft="@drawable/ic_senha"
+                android:drawableTint="@color/RoxoFoodGuru"
 
                 android:drawablePadding="15sp"
                 android:padding="15sp"
                 android:inputType="textPassword"
                 />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1sp"
-                android:layout_marginLeft="15sp"
-                android:layout_marginRight="15sp"/>
-
             <Button
-                android:id="@+id/btn_confirmar_cadastro"
+                android:id="@+id/btn_confirmar_cadastro_cliente"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 android:text="CONFIRMAR CADASTRO"
-                android:onClick="onClick"
+                android:textColor="@color/Branco"
                 android:padding="15sp"
 
+                android:background="@drawable/borda_redonda_bt_roxo"
 
                 android:layout_marginLeft="20sp"
                 android:layout_marginRight="20sp"
                 android:layout_marginTop="20sp"
                 android:layout_marginBottom="20sp"
-                />
-        </LinearLayout>
 
+                android:onClick="onClick" />
+        </LinearLayout>
     </ScrollView>
 
 </LinearLayout>
