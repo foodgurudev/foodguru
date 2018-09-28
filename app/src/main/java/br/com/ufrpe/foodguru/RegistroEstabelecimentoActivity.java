@@ -1,5 +1,6 @@
 package br.com.ufrpe.foodguru;
 
+import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ public class RegistroEstabelecimentoActivity extends AppCompatActivity implement
     private EditText etNome, etTelefone, etCidade, etRua
             , etComplemento, etEmail, etSenha, etConfirmarSenha;
     private Spinner spEstado;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,10 @@ public class RegistroEstabelecimentoActivity extends AppCompatActivity implement
         etComplemento = findViewById(R.id.etComplementoEstabelecimento);
         etRua = findViewById(R.id.etRuaEstabelecimento);
         spEstado = findViewById(R.id.spEstadoEstabelecimento);
+        progressDialog = new ProgressDialog(RegistroEstabelecimentoActivity.this);
+        progressDialog.setTitle("Registrando...");
     }
+
     private boolean validarCampos(){
         boolean validacao = true;
         if (etNome.getText().toString().trim().isEmpty()){
@@ -87,6 +92,7 @@ public class RegistroEstabelecimentoActivity extends AppCompatActivity implement
         if (!validarCampos()){
             return;
         }
+        progressDialog.show();
         FirebaseHelper.getFirebaseAuth().createUserWithEmailAndPassword(email, senha)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -94,6 +100,7 @@ public class RegistroEstabelecimentoActivity extends AppCompatActivity implement
                         if(task.isSuccessful()){
                             adicionarUsuario();
                         }else{
+                            progressDialog.dismiss();
                             Helper.criarToast(RegistroEstabelecimentoActivity.this, "Informe um email válido.");
                         }
                     }
@@ -108,24 +115,51 @@ public class RegistroEstabelecimentoActivity extends AppCompatActivity implement
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                    Helper.criarToast(RegistroEstabelecimentoActivity.this,"Registro conluído com sucesso.");
+                    adicionarEstabelecimento();
                 }
             }
         });
     }
     public void adicionarEstabelecimento(){
-
+        Estabelecimento estabelecimento = criarEstabelecimento();
+        FirebaseDatabase.getInstance().getReference(FirebaseHelper.REFERENCIA_ESTABELECIMENTO)
+                .push()
+                .setValue(estabelecimento).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    progressDialog.dismiss();
+                    Helper.criarToast(RegistroEstabelecimentoActivity.this,"Registro conluído com sucesso.");
+                }
+            }
+        });
+    }
+    public Estabelecimento criarEstabelecimento(){
+        Estabelecimento estabelecimento = new Estabelecimento();
+        estabelecimento.setEmail(etEmail.getText().toString());
+        estabelecimento.setEndereco(new Endereco(etRua.getText().toString()
+                ,etCidade.getText().toString()
+                ,spEstado.getSelectedItem().toString()));
+        estabelecimento.setUsuario(criarUsuario());
+        return estabelecimento;
     }
     public Usuario criarUsuario(){
         Usuario usuario = new Usuario();
         usuario.setEmail(etEmail.getText().toString());
         usuario.setNome(etNome.getText().toString());
-        usuario.setTipoConta(TipoContaEnum.CLIENTE.getTipo());
+        usuario.setTipoConta(TipoContaEnum.ESTABELECIMENTO.getTipo());
         return usuario;
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case (R.id.btConfirmarRegistroEstabelecimento):
+                confirmarCadastro(etEmail.getText().toString()
+                ,etSenha.getText().toString());
+                break;
+            default:
+                break;
+        }
     }
 }

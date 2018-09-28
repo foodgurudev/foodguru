@@ -47,7 +47,7 @@
 
                 android:drawablePadding="15sp"
                 android:padding="15sp"/>
-            
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="55sp">
@@ -188,7 +188,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:onClick="onClick"
                 android:text="CONFIRMAR CADASTRO"
                 android:textColor="@color/Branco"
                 android:padding="15sp"

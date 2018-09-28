@@ -4,6 +4,15 @@ public class Usuario {
     private String email;
     private String tipoConta;
     private String nome;
+    private String urlFoto;
+
+    public String getUrlFoto() {
+        return urlFoto;
+    }
+
+    public void setUrlFoto(String urlFoto) {
+        this.urlFoto = urlFoto;
+    }
 
     public String getEmail() {
         return email;

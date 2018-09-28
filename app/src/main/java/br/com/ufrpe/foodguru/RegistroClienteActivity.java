@@ -1,5 +1,6 @@
 package br.com.ufrpe.foodguru;
 
+import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
     private EditText emailClienteReg;
     private EditText senhaClienteReg;
     private EditText confirmaSenhaClienteReg;
+    private Usuario usuarioAtual;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,8 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
         emailClienteReg = findViewById(R.id.etEmailCliente);
         senhaClienteReg = findViewById(R.id.etSenhaCliente);
         confirmaSenhaClienteReg = findViewById(R.id.etConfirmarSenhaCliente);
+        progressDialog = new ProgressDialog(RegistroClienteActivity.this);
+        progressDialog.setTitle("Registrando...");
 
     }
 
@@ -65,6 +70,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
         if (!validarCampos()){
             return;
         }
+        progressDialog.show();
         FirebaseHelper.getFirebaseAuth().createUserWithEmailAndPassword(email, senha)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -72,6 +78,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
                         if(task.isSuccessful()){
                             adicionarUsuario();
                         }else{
+                            progressDialog.dismiss();
                             Helper.criarToast(RegistroClienteActivity.this, "Informe um email válido.");
                         }
                     }
@@ -80,19 +87,37 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
 
     }
     public void adicionarUsuario(){
-        Usuario usuario = criarUsuario();
+        usuarioAtual = criarUsuario();
         FirebaseDatabase.getInstance().getReference(FirebaseHelper.REFERENCIA_USUARIOS)
                 .child(FirebaseHelper.getUidUsuario())
-                .setValue(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
+                .setValue(usuarioAtual).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
+                   adicionarCliente();
+                }
+            }
+        });
+    }
+    public Cliente criarCliente(){
+        Cliente cliente = new Cliente();
+        cliente.setUsuario(usuarioAtual);
+        return cliente;
+    }
+    public void adicionarCliente(){
+        Cliente cliente = criarCliente();
+        FirebaseDatabase.getInstance().getReference(FirebaseHelper.REFERENCIA_CLIENTE)
+                .push()
+                .setValue(cliente).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    progressDialog.dismiss();
                     Helper.criarToast(RegistroClienteActivity.this,"Registro conluído com sucesso.");
                 }
             }
         });
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
