@@ -22,7 +22,9 @@
         <activity android:name=".RegistroClienteActivity" />
         <activity android:name=".TipoCadastroActivity" />
         <activity android:name=".RegistroEstabelecimentoActivity" />
-        <activity android:name=".RecuperarSenhaActivity"></activity>
+        <activity android:name=".RecuperarSenhaActivity" />
+        <activity android:name=".PerfilClienteActivity" />
+        <activity android:name=".PerfilEstabelecimentoActivity"></activity>
     </application>
 
 </manifest>

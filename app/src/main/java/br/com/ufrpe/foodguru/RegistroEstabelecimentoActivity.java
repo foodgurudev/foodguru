@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegistroEstabelecimentoActivity extends AppCompatActivity implements View.OnClickListener{
@@ -19,6 +20,7 @@ public class RegistroEstabelecimentoActivity extends AppCompatActivity implement
             , etComplemento, etEmail, etSenha, etConfirmarSenha;
     private Spinner spEstado;
     private ProgressDialog progressDialog;
+    private FirebaseAuth mAuth = FirebaseHelper.getFirebaseAuth();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +95,7 @@ public class RegistroEstabelecimentoActivity extends AppCompatActivity implement
             return;
         }
         progressDialog.show();
-        FirebaseHelper.getFirebaseAuth().createUserWithEmailAndPassword(email, senha)
+        mAuth.createUserWithEmailAndPassword(email, senha)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -136,7 +138,7 @@ public class RegistroEstabelecimentoActivity extends AppCompatActivity implement
     }
     public Estabelecimento criarEstabelecimento(){
         Estabelecimento estabelecimento = new Estabelecimento();
-        estabelecimento.setEmail(etEmail.getText().toString());
+        estabelecimento.setTelefone(etTelefone.getText().toString());
         estabelecimento.setEndereco(new Endereco(etRua.getText().toString()
                 ,etCidade.getText().toString()
                 ,spEstado.getSelectedItem().toString()));
@@ -145,7 +147,6 @@ public class RegistroEstabelecimentoActivity extends AppCompatActivity implement
     }
     public Usuario criarUsuario(){
         Usuario usuario = new Usuario();
-        usuario.setEmail(etEmail.getText().toString());
         usuario.setNome(etNome.getText().toString());
         usuario.setTipoConta(TipoContaEnum.ESTABELECIMENTO.getTipo());
         return usuario;

@@ -1,7 +1,6 @@
 package br.com.ufrpe.foodguru;
 
 public class Usuario {
-    private String email;
     private String tipoConta;
     private String nome;
     private String urlFoto;
@@ -13,15 +12,6 @@ public class Usuario {
     public void setUrlFoto(String urlFoto) {
         this.urlFoto = urlFoto;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
 
     public String getTipoConta() {
         return tipoConta;

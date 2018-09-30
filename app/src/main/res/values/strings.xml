@@ -37,4 +37,5 @@
     <string name="mesa_lv"><b>Mesa: </b></string>
     <string name="title_activity_sugeridos">SugeridosActivity</string>
     <string name="title_activity_relatorio_vendas">RelatorioVendasActivity</string>
+    <string name="sp_email_enviado_sucesso">Email enviado com sucesso.</string>
 </resources>

@@ -131,7 +131,6 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
     }
     public Usuario criarUsuario(){
         Usuario usuario = new Usuario();
-        usuario.setEmail(emailClienteReg.getText().toString());
         usuario.setNome(nomeClienteReg.getText().toString());
         usuario.setTipoConta(TipoContaEnum.CLIENTE.getTipo());
         return usuario;
