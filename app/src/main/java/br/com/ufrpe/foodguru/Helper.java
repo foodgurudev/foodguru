@@ -1,7 +1,10 @@
 package br.com.ufrpe.foodguru;
 
 import android.app.ProgressDialog;
+import android.app.Service;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.widget.Toast;
 
 import java.util.regex.Matcher;
@@ -21,6 +24,17 @@ public class Helper {
             Matcher matcher = pattern.matcher(email);
 
             return matcher.matches();
+        }
+        return false;
+    }
+    public static boolean isConected(Context context){
+        ConnectivityManager connectivity = (ConnectivityManager)
+                context.getSystemService(Service.CONNECTIVITY_SERVICE);
+        if (connectivity != null){
+            NetworkInfo info = connectivity.getActiveNetworkInfo();
+            if (info != null){
+                return info.getState() == NetworkInfo.State.CONNECTED;
+            }
         }
         return false;
     }
