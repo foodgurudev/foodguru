@@ -6,10 +6,11 @@
     tools:context=".estabelecimento.MesasFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Mesas"
-        android:gravity="center"/>
+        android:id="@+id/recyclerv_view"
+        tools:listitem="@layout/mesa_list_item"/>
+
 
 </FrameLayout>
