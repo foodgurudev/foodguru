@@ -1,4 +1,4 @@
-package br.com.ufrpe.foodguru.infraestrutura;
+package br.com.ufrpe.foodguru.infraestrutura.utils;
 
 public enum TipoContaEnum {
     ESTABELECIMENTO("estabelecimento"), CLIENTE("cliente");

@@ -1,4 +1,4 @@
-package br.com.ufrpe.foodguru.infraestrutura;
+package br.com.ufrpe.foodguru.usuario.GUI;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -19,13 +19,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+<<<<<<< HEAD:app/src/main/java/br/com/ufrpe/foodguru/infraestrutura/LoginActivity.java
 import br.com.ufrpe.foodguru.cliente.HomeClienteActivity;
 import br.com.ufrpe.foodguru.R;
 import br.com.ufrpe.foodguru.estabelecimento.HomeEstabelecimentoActivity;
 import br.com.ufrpe.foodguru.estabelecimento.PerfilEstabelecimentoActivity;
+=======
+import br.com.ufrpe.foodguru.cliente.GUI.LerQrCodeActivity;
+import br.com.ufrpe.foodguru.R;
+import br.com.ufrpe.foodguru.estabelecimento.GUI.PerfilEstabelecimentoActivity;
+import br.com.ufrpe.foodguru.infraestrutura.persistencia.FirebaseHelper;
+import br.com.ufrpe.foodguru.infraestrutura.utils.Helper;
+>>>>>>> ConsertoLogin:app/src/main/java/br/com/ufrpe/foodguru/usuario/GUI/LoginActivity.java
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
-    private static FirebaseAuth mAuth;
+    private final FirebaseAuth mAuth = FirebaseHelper.getFirebaseAuth();;
     private EditText edtLoginEmail, edtLoginSenha;
     private ProgressDialog mProgressDialog;
     private final DatabaseReference firebaseReference = FirebaseDatabase.getInstance().getReference();
@@ -36,8 +44,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mAuth = FirebaseHelper.getFirebaseAuth();
-        checkUser(mAuth.getCurrentUser());
         setUpViews();
 
     }
@@ -49,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.tv_recuperar_senha).setOnClickListener(this);
         findViewById(R.id.tvCadastre_se).setOnClickListener(this);
         mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.setTitle("Entrando...");
 
     }
@@ -67,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             verificarTipoConta(currentUser);
                         }else {
                             mProgressDialog.dismiss();
+                            mProgressDialog.setCanceledOnTouchOutside(true);
                             Helper.criarToast(LoginActivity.this,"Digite uma combinação válida.");
                         }
                     }
@@ -75,38 +83,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth = FirebaseHelper.getFirebaseAuth();
-        checkUser(mAuth.getCurrentUser());
     }
-    private void checkUser(FirebaseUser user) {
-        if (user != null) {
-            verificarTipoConta(user);
-        }
-
-    }
-    private void verificarTipoConta(FirebaseUser user) {
-        firebaseReference.child(FirebaseHelper.REFERENCIA_USUARIOS)
-                .child(user.getUid())
-                .child(TIPO_CONTA)
+    private void verificarTipoConta(FirebaseUser cUser){
+        firebaseReference.child(FirebaseHelper.REFERENCIA_ESTABELECIMENTO)
+                .child(cUser.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String tipoConta = dataSnapshot.getValue(String.class);
-                if (dataSnapshot.getValue(String.class) != null){
-                    mProgressDialog.dismiss();
-                    if(tipoConta.equals(TipoContaEnum.CLIENTE.getTipo())) {
-                        abrirTelaCliente();
-                    } else {
-                        abrirTelaEstabelecimento();
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            abrirTelaEstabelecimento();
+                            finish();
+                        }else{
+                            abrirTelaCliente();
+                            finish();
+                        }
                     }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                    }
+                });
+    }
     private boolean validarCampos(){
         boolean validacao = true;
 

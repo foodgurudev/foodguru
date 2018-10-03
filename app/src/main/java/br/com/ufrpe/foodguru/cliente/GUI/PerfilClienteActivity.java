@@ -1,4 +1,4 @@
-package br.com.ufrpe.foodguru.cliente;
+package br.com.ufrpe.foodguru.cliente.GUI;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import br.com.ufrpe.foodguru.infraestrutura.FirebaseHelper;
-import br.com.ufrpe.foodguru.infraestrutura.Helper;
-import br.com.ufrpe.foodguru.infraestrutura.LoginActivity;
+import br.com.ufrpe.foodguru.infraestrutura.persistencia.FirebaseHelper;
+import br.com.ufrpe.foodguru.infraestrutura.utils.Helper;
+import br.com.ufrpe.foodguru.usuario.GUI.LoginActivity;
 import br.com.ufrpe.foodguru.R;
 
 public class PerfilClienteActivity extends AppCompatActivity implements View.OnClickListener {

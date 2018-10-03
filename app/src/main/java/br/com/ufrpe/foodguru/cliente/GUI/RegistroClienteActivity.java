@@ -1,6 +1,7 @@
-package br.com.ufrpe.foodguru.cliente;
+package br.com.ufrpe.foodguru.cliente.GUI;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,21 +11,28 @@ import android.widget.EditText;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.FirebaseDatabase;
 
-import br.com.ufrpe.foodguru.infraestrutura.FirebaseHelper;
-import br.com.ufrpe.foodguru.infraestrutura.Helper;
+import br.com.ufrpe.foodguru.cliente.dominio.Cliente;
+import br.com.ufrpe.foodguru.cliente.negocio.ClienteServices;
+import br.com.ufrpe.foodguru.infraestrutura.persistencia.FirebaseHelper;
+import br.com.ufrpe.foodguru.infraestrutura.utils.Helper;
 import br.com.ufrpe.foodguru.R;
-import br.com.ufrpe.foodguru.infraestrutura.TipoContaEnum;
-import br.com.ufrpe.foodguru.usuario.Usuario;
+import br.com.ufrpe.foodguru.infraestrutura.utils.TipoContaEnum;
+import br.com.ufrpe.foodguru.usuario.GUI.LoginActivity;
+import br.com.ufrpe.foodguru.usuario.negocio.UsuarioServices;
 
 public class RegistroClienteActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText nomeClienteReg;
     private EditText emailClienteReg;
     private EditText senhaClienteReg;
     private EditText confirmaSenhaClienteReg;
-    private Usuario usuarioAtual;
     private ProgressDialog progressDialog;
+    private FirebaseAuth mAuth = FirebaseHelper.getFirebaseAuth();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
         confirmaSenhaClienteReg = findViewById(R.id.etConfirmarSenhaCliente);
         progressDialog = new ProgressDialog(RegistroClienteActivity.this);
         progressDialog.setTitle("Registrando...");
+        progressDialog.setCanceledOnTouchOutside(false);
 
     }
 
@@ -64,10 +73,6 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
             confirmaSenhaClienteReg.setError(getString(R.string.sp_excecao_senhas_iguais));
             validacao = false;
         }
-        if (senhaClienteReg.getText().toString().length() < 6){
-            senhaClienteReg.setError("Digite una senha com mais de 6 caracteres.");
-            validacao = false;
-        }
         return validacao;
     }
 
@@ -76,52 +81,69 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
             return;
         }
         progressDialog.show();
-        FirebaseHelper.getFirebaseAuth().createUserWithEmailAndPassword(email, senha)
+        mAuth.createUserWithEmailAndPassword(email, senha)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            adicionarUsuario();
-                        }else{
-                            progressDialog.dismiss();
-                            Helper.criarToast(RegistroClienteActivity.this, "Informe um email válido.");
+                        if(isCombinacaoValida(task)){
+                            if(adicionarEstabelecimento(criarCliente())){
+                                setNomeUsuario();
+                                progressDialog.dismiss();
+                                Helper.criarToast(getApplicationContext(), "Registrado com sucesso.");
+                                abrirTelaLogin();
+                            }else{
+                                progressDialog.dismiss();
+                                progressDialog.setCanceledOnTouchOutside(true);
+                                Helper.criarToast(RegistroClienteActivity.this
+                                        , "Database Error");
+                            }
                         }
                     }
                 });
 
 
     }
-    public void adicionarUsuario(){
-        usuarioAtual = criarUsuario();
-        FirebaseDatabase.getInstance().getReference(FirebaseHelper.REFERENCIA_USUARIOS)
-                .child(FirebaseHelper.getUidUsuario())
-                .setValue(usuarioAtual).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                   adicionarCliente();
-                }
+    public void setNomeUsuario(){
+        UsuarioServices usuarioServices = new UsuarioServices();
+        usuarioServices.alterarNome(nomeClienteReg.getText().toString());
+    }
+    public void abrirTelaLogin(){
+        Intent intent = new Intent(RegistroClienteActivity.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+    private boolean isCombinacaoValida(@NonNull Task<AuthResult> task) {
+        boolean verificador = true;
+
+        try{
+            if (task.isSuccessful()) {
+                return true;
+            }else {
+                verificador = false;
+                progressDialog.dismiss();
+                progressDialog.setCanceledOnTouchOutside(false);
+                throw task.getException();
             }
-        });
+        }catch (FirebaseAuthWeakPasswordException e){
+            senhaClienteReg.setError("Digite uma senha com no mínimo 6 caracteres");
+            confirmaSenhaClienteReg.setError("Digite uma senha com no mínimo 6 caracteres");
+        }catch (FirebaseAuthInvalidCredentialsException e){
+            emailClienteReg.setError("Informe um email válido");
+        }catch (FirebaseAuthUserCollisionException e){
+            emailClienteReg.setError("Uma conta com esse email já existe");
+        }catch (Exception e){
+            Helper.criarToast(RegistroClienteActivity.this,"Database error");
+        }
+        return verificador;
     }
     public Cliente criarCliente(){
         Cliente cliente = new Cliente();
-        cliente.setUsuario(usuarioAtual);
+        cliente.setNome(nomeClienteReg.getText().toString());
         return cliente;
     }
-    public void adicionarCliente(){
-        Cliente cliente = criarCliente();
-        FirebaseDatabase.getInstance().getReference(FirebaseHelper.REFERENCIA_CLIENTE)
-                .push()
-                .setValue(cliente).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    progressDialog.dismiss();
-                    Helper.criarToast(RegistroClienteActivity.this,"Registro conluído com sucesso.");
-                }
-            }
-        });
+    public boolean adicionarEstabelecimento(Cliente cliente){
+       ClienteServices clienteServices = new ClienteServices();
+        return clienteServices.adicionarCliente(cliente);
     }
     @Override
     public void onClick(View v) {
@@ -133,11 +155,5 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
             default:
                 break;
         }
-    }
-    public Usuario criarUsuario(){
-        Usuario usuario = new Usuario();
-        usuario.setNome(nomeClienteReg.getText().toString());
-        usuario.setTipoConta(TipoContaEnum.CLIENTE.getTipo());
-        return usuario;
     }
 }

@@ -1,4 +1,4 @@
-package br.com.ufrpe.foodguru.infraestrutura;
+package br.com.ufrpe.foodguru.usuario.GUI;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import br.com.ufrpe.foodguru.R;
-import br.com.ufrpe.foodguru.cliente.RegistroClienteActivity;
-import br.com.ufrpe.foodguru.estabelecimento.RegistroEstabelecimentoActivity;
+import br.com.ufrpe.foodguru.cliente.GUI.RegistroClienteActivity;
+import br.com.ufrpe.foodguru.estabelecimento.GUI.RegistroEstabelecimentoActivity;
 
 public class TipoCadastroActivity extends AppCompatActivity {
 

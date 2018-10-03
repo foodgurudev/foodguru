@@ -1,4 +1,4 @@
-package br.com.ufrpe.foodguru.infraestrutura;
+package br.com.ufrpe.foodguru.infraestrutura.utils;
 
 import android.app.ProgressDialog;
 import android.app.Service;

@@ -1,6 +1,7 @@
-package br.com.ufrpe.foodguru.estabelecimento;
+package br.com.ufrpe.foodguru.estabelecimento.GUI;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,13 +13,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
-import br.com.ufrpe.foodguru.infraestrutura.FirebaseHelper;
-import br.com.ufrpe.foodguru.infraestrutura.Helper;
+import br.com.ufrpe.foodguru.estabelecimento.dominio.Endereco;
+import br.com.ufrpe.foodguru.estabelecimento.dominio.Estabelecimento;
+import br.com.ufrpe.foodguru.estabelecimento.negocio.EstabelecimentoServices;
+import br.com.ufrpe.foodguru.infraestrutura.persistencia.FirebaseHelper;
+import br.com.ufrpe.foodguru.infraestrutura.utils.Helper;
 import br.com.ufrpe.foodguru.R;
-import br.com.ufrpe.foodguru.infraestrutura.TipoContaEnum;
-import br.com.ufrpe.foodguru.usuario.Usuario;
+import br.com.ufrpe.foodguru.usuario.GUI.LoginActivity;
+import br.com.ufrpe.foodguru.usuario.negocio.UsuarioServices;
 
 public class RegistroEstabelecimentoActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText etNome, etTelefone, etCidade, etRua
@@ -45,6 +51,7 @@ public class RegistroEstabelecimentoActivity extends AppCompatActivity implement
         spEstado = findViewById(R.id.spEstadoEstabelecimento);
         progressDialog = new ProgressDialog(RegistroEstabelecimentoActivity.this);
         progressDialog.setTitle("Registrando...");
+        progressDialog.setCanceledOnTouchOutside(false);
     }
 
     private boolean validarCampos(){
@@ -72,20 +79,12 @@ public class RegistroEstabelecimentoActivity extends AppCompatActivity implement
             etConfirmarSenha.setError(getString(R.string.sp_excecao_senhas_iguais));
             validacao = false;
         }
-        if (etSenha.getText().toString().length() < 6){
-            etSenha.setError("Digite una senha com mais de 6 caracteres.");
-            validacao = false;
-        }
         if (etRua.getText().toString().isEmpty()) {
             etRua.setError(getString(R.string.alerta_campo_vazio));
             validacao = false;
         }
         if (etTelefone.getText().toString().isEmpty()) {
             etRua.setError(getString(R.string.alerta_campo_vazio));
-            validacao = false;
-        }
-        if (etComplemento.getText().toString().isEmpty()) {
-            etComplemento.setError(getString(R.string.alerta_campo_vazio));
             validacao = false;
         }
         if (spEstado.getSelectedItemPosition() == 0){
@@ -104,16 +103,32 @@ public class RegistroEstabelecimentoActivity extends AppCompatActivity implement
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            adicionarUsuario();
-                        }else{
-                            progressDialog.dismiss();
-                            Helper.criarToast(RegistroEstabelecimentoActivity.this, "Informe um email válido.");
+                        if(isCombinacaoValida(task)){
+                            if(adicionarEstabelecimento(criarEstabelecimento())){
+                                setNomeUsuario();
+                                progressDialog.dismiss();
+                                Helper.criarToast(getApplicationContext(),"Registrado com sucesso.");
+                                abrirTelaLogin();
+                            }else{
+                                progressDialog.dismiss();
+                                progressDialog.setCanceledOnTouchOutside(true);
+                                Helper.criarToast(RegistroEstabelecimentoActivity.this
+                                        , "Database Error");
+                            }
                         }
                     }
                 });
     }
-
+    public void setNomeUsuario(){
+        UsuarioServices usuarioServices = new UsuarioServices();
+        usuarioServices.alterarNome(etNome.getText().toString());
+    }
+    public void abrirTelaLogin(){
+        Intent intent = new Intent(RegistroEstabelecimentoActivity.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+    /*
     public void adicionarUsuario(){
         Usuario usuario = criarUsuario();
         FirebaseDatabase.getInstance().getReference(FirebaseHelper.REFERENCIA_USUARIOS)
@@ -127,34 +142,42 @@ public class RegistroEstabelecimentoActivity extends AppCompatActivity implement
             }
         });
     }
-    public void adicionarEstabelecimento(){
-        Estabelecimento estabelecimento = criarEstabelecimento();
-        FirebaseDatabase.getInstance().getReference(FirebaseHelper.REFERENCIA_ESTABELECIMENTO)
-                .push()
-                .setValue(estabelecimento).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    progressDialog.dismiss();
-                    Helper.criarToast(RegistroEstabelecimentoActivity.this,"Registro conluído com sucesso.");
-                }
+    */
+
+    private boolean isCombinacaoValida(@NonNull Task<AuthResult> task) {
+        boolean verificador = true;
+
+        try{
+            if (task.isSuccessful()) {
+                return true;
+            }else {
+                verificador = false;
+                progressDialog.dismiss();
+                progressDialog.setCanceledOnTouchOutside(false);
+                throw task.getException();
             }
-        });
+        }catch (FirebaseAuthWeakPasswordException e){
+            etSenha.setError("Digite uma senha com no mínimo 6 caracteres");
+            etConfirmarSenha.setError("Digite uma senha com no mínimo 6 caracteres");
+        }catch (FirebaseAuthInvalidCredentialsException e){
+            etEmail.setError("Informe um email válido");
+        }catch (FirebaseAuthUserCollisionException e){
+            etEmail.setError("Uma conta com esse email já existe");
+        }catch (Exception e){
+            Helper.criarToast(RegistroEstabelecimentoActivity.this,"Database error");
+        }
+        return verificador;
+    }
+    public boolean adicionarEstabelecimento(Estabelecimento estabelecimento){
+        EstabelecimentoServices estabelecimentoServices = new EstabelecimentoServices();
+        return estabelecimentoServices.adicionarEstabelecimento(estabelecimento);
     }
     public Estabelecimento criarEstabelecimento(){
         Estabelecimento estabelecimento = new Estabelecimento();
-        estabelecimento.setTelefone(etTelefone.getText().toString());
         estabelecimento.setEndereco(new Endereco(etRua.getText().toString()
                 ,etCidade.getText().toString()
                 ,spEstado.getSelectedItem().toString()));
-        estabelecimento.setUsuario(criarUsuario());
         return estabelecimento;
-    }
-    public Usuario criarUsuario(){
-        Usuario usuario = new Usuario();
-        usuario.setNome(etNome.getText().toString());
-        usuario.setTipoConta(TipoContaEnum.ESTABELECIMENTO.getTipo());
-        return usuario;
     }
 
     @Override

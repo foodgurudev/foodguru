@@ -1,4 +1,4 @@
-package br.com.ufrpe.foodguru.infraestrutura;
+package br.com.ufrpe.foodguru.usuario.GUI;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;

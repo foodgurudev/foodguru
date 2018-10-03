@@ -1,4 +1,4 @@
-package br.com.ufrpe.foodguru;
+package br.com.ufrpe.foodguru.cliente.GUI;
 
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
@@ -16,9 +16,10 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import br.com.ufrpe.foodguru.infraestrutura.FirebaseHelper;
-import br.com.ufrpe.foodguru.infraestrutura.Helper;
-import br.com.ufrpe.foodguru.infraestrutura.LoginActivity;
+import br.com.ufrpe.foodguru.R;
+import br.com.ufrpe.foodguru.infraestrutura.persistencia.FirebaseHelper;
+import br.com.ufrpe.foodguru.infraestrutura.utils.Helper;
+import br.com.ufrpe.foodguru.usuario.GUI.LoginActivity;
 
 public class LerQrCodeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseHelper.getFirebaseAuth();

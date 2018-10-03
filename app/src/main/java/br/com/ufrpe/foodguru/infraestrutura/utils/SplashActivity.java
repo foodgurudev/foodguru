@@ -1,4 +1,4 @@
-package br.com.ufrpe.foodguru.infraestrutura;
+package br.com.ufrpe.foodguru.infraestrutura.utils;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -6,20 +6,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
+<<<<<<< HEAD:app/src/main/java/br/com/ufrpe/foodguru/infraestrutura/SplashActivity.java
 import br.com.ufrpe.foodguru.cliente.HomeClienteActivity;
 import br.com.ufrpe.foodguru.R;
 import br.com.ufrpe.foodguru.estabelecimento.HomeEstabelecimentoActivity;
 import br.com.ufrpe.foodguru.estabelecimento.PerfilEstabelecimentoActivity;
+=======
+import br.com.ufrpe.foodguru.R;
+import br.com.ufrpe.foodguru.usuario.GUI.LoginActivity;
+import br.com.ufrpe.foodguru.infraestrutura.persistencia.FirebaseHelper;
+>>>>>>> ConsertoLogin:app/src/main/java/br/com/ufrpe/foodguru/infraestrutura/utils/SplashActivity.java
 
 public class SplashActivity extends AppCompatActivity {
-    private final int TEMPO_SPLASH = 2000;
+    private final int TEMPO_SPLASH = 1000;
     private final FirebaseAuth mAuth = FirebaseHelper.getFirebaseAuth();
     private final DatabaseReference firebaseReference = FirebaseDatabase.getInstance().getReference();
     private final String TIPO_CONTA = "tipoConta";
@@ -31,28 +33,23 @@ public class SplashActivity extends AppCompatActivity {
         startHandler();
     }
 
-    private void startHandler(){
+    private void startHandler() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                checkUser(mAuth.getCurrentUser());
+                startLoginActivity();
             }
         }, TEMPO_SPLASH);
 
     }
-    private void checkUser(FirebaseUser user) {
-        if (user != null) {
-            verificarTipoConta(user);
-        }else{
-            startLoginActivity();
-        }
-    }
-    private void startLoginActivity(){
+
+    private void startLoginActivity() {
         Intent loginIntent = new Intent(this, LoginActivity.class);
         startActivity(loginIntent);
         finish();
     }
 
+<<<<<<< HEAD:app/src/main/java/br/com/ufrpe/foodguru/infraestrutura/SplashActivity.java
     private void abrirTelaCliente(){
         Intent intentAbrirTelaCliente = new Intent(SplashActivity.this, HomeClienteActivity.class);
         startActivity(intentAbrirTelaCliente);
@@ -86,3 +83,6 @@ public class SplashActivity extends AppCompatActivity {
                 });
     }
 }
+=======
+}
+>>>>>>> ConsertoLogin:app/src/main/java/br/com/ufrpe/foodguru/infraestrutura/utils/SplashActivity.java

@@ -1,4 +1,4 @@
-package br.com.ufrpe.foodguru.estabelecimento;
+package br.com.ufrpe.foodguru.estabelecimento.dominio;
 
 public class Endereco {
     private String rua;
