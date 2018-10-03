@@ -19,9 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import br.com.ufrpe.foodguru.EscanearQrCodeFragment;
-import br.com.ufrpe.foodguru.LerQrCodeActivity;
+import br.com.ufrpe.foodguru.cliente.HomeClienteActivity;
 import br.com.ufrpe.foodguru.R;
+import br.com.ufrpe.foodguru.estabelecimento.HomeEstabelecimentoActivity;
 import br.com.ufrpe.foodguru.estabelecimento.PerfilEstabelecimentoActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
@@ -129,14 +129,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void abrirTelaCliente(){
-        Intent intentAbrirTelaCliente = new Intent(LoginActivity.this, LerQrCodeActivity.class);
+        Intent intentAbrirTelaCliente = new Intent(LoginActivity.this, HomeClienteActivity.class);
         startActivity(intentAbrirTelaCliente);
         finish();
         cleanViews();
     }
 
     private void abrirTelaEstabelecimento() {
-        Intent intentAbrirTelaEstabelecimento = new Intent(LoginActivity.this, PerfilEstabelecimentoActivity.class);
+        Intent intentAbrirTelaEstabelecimento = new Intent(LoginActivity.this, HomeEstabelecimentoActivity.class);
         startActivity(intentAbrirTelaEstabelecimento);
         finish();
         cleanViews();

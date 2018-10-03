@@ -13,8 +13,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import br.com.ufrpe.foodguru.LerQrCodeActivity;
+import br.com.ufrpe.foodguru.cliente.HomeClienteActivity;
 import br.com.ufrpe.foodguru.R;
+import br.com.ufrpe.foodguru.estabelecimento.HomeEstabelecimentoActivity;
 import br.com.ufrpe.foodguru.estabelecimento.PerfilEstabelecimentoActivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -53,13 +54,13 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void abrirTelaCliente(){
-        Intent intentAbrirTelaCliente = new Intent(SplashActivity.this, LerQrCodeActivity.class);
+        Intent intentAbrirTelaCliente = new Intent(SplashActivity.this, HomeClienteActivity.class);
         startActivity(intentAbrirTelaCliente);
         finish();
     }
 
     private void abrirTelaEstabelecimento() {
-        Intent intentAbrirTelaEstabelecimento = new Intent(SplashActivity.this, PerfilEstabelecimentoActivity.class);
+        Intent intentAbrirTelaEstabelecimento = new Intent(SplashActivity.this, HomeEstabelecimentoActivity.class);
         startActivity(intentAbrirTelaEstabelecimento);
         finish();
     }

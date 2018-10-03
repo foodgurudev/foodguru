@@ -29,8 +29,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LerQrCodeActivity"
-            android:label="@string/title_activity_ler_qr_code"></activity>
+            android:name=".cliente.HomeClienteActivity"
+            android:label="@string/title_activity_ler_qr_code" />
+        <activity
+            android:name=".estabelecimento.HomeEstabelecimentoActivity"
+            android:label="@string/title_activity_home_estabelecimento"></activity>
     </application>
 
 </manifest>
