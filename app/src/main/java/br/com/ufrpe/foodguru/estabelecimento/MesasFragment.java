@@ -1,9 +1,9 @@
 package br.com.ufrpe.foodguru.estabelecimento;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,12 +20,14 @@ import br.com.ufrpe.foodguru.estabelecimento.dominio.Mesa;
  */
 public class MesasFragment extends Fragment {
 
-    RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
+    private Context context;
 
     private MesaAdapter mAdapter;
 
-    public MesasFragment() {
+    public MesasFragment(Context context) {
         // Required empty public constructor
+        this.context = context;
     }
 
 
@@ -33,18 +35,19 @@ public class MesasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mesas, container, false);
         setupRecycler();
+        return inflater.inflate(R.layout.fragment_mesas, container, false);
     }
 
     private void setupRecycler() {
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(layoutManager);
 
         ArrayList<Mesa> mesaLista = new ArrayList();
         mAdapter = new MesaAdapter(mesaLista);
         mRecyclerView.setAdapter(mAdapter);
+    }
 
 
 

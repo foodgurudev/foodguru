@@ -13,13 +13,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.content.Context;
+
+import br.com.ufrpe.foodguru.cliente.GUI.MeusDadosClienteFragment;
+import br.com.ufrpe.foodguru.infraestrutura.utils.Helper;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import br.com.ufrpe.foodguru.R;
-import br.com.ufrpe.foodguru.infraestrutura.FirebaseHelper;
-import br.com.ufrpe.foodguru.infraestrutura.Helper;
-import br.com.ufrpe.foodguru.infraestrutura.LoginActivity;
+import br.com.ufrpe.foodguru.infraestrutura.persistencia.FirebaseHelper;
+import br.com.ufrpe.foodguru.usuario.GUI.LoginActivity;
 
 public class HomeClienteActivity extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseHelper.getFirebaseAuth();

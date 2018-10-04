@@ -3,10 +3,15 @@ package br.com.ufrpe.foodguru.infraestrutura.utils;
 import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,6 +42,12 @@ public class Helper {
             }
         }
         return false;
+    }
+    public static Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
 }

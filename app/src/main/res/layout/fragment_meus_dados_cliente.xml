@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
-    tools:context=".cliente.MeusDadosClienteFragment">
-=======
     tools:context=".cliente.GUI.MeusDadosClienteFragment">
->>>>>>> ConsertoLogin
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,6 +24,7 @@
                 android:background="@drawable/borda_redonda_bt_roxo"
                 />
             <Button
+                android:id="@+id/editar_foto"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:background="@drawable/ic_foto"
@@ -92,6 +89,24 @@
 
         </LinearLayout>
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabEditarCliente"
+            android:layout_width="101dp"
+            android:layout_height="113dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:layout_marginEnd="47dp"
+            android:layout_marginRight="47dp"
+            android:layout_marginBottom="97dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_menu_edit" />
+    </RelativeLayout>
 
 
 </FrameLayout>

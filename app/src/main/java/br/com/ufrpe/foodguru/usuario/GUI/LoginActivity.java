@@ -18,26 +18,21 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-<<<<<<< HEAD:app/src/main/java/br/com/ufrpe/foodguru/infraestrutura/LoginActivity.java
 import br.com.ufrpe.foodguru.cliente.HomeClienteActivity;
 import br.com.ufrpe.foodguru.R;
 import br.com.ufrpe.foodguru.estabelecimento.HomeEstabelecimentoActivity;
-import br.com.ufrpe.foodguru.estabelecimento.PerfilEstabelecimentoActivity;
-=======
 import br.com.ufrpe.foodguru.cliente.GUI.LerQrCodeActivity;
 import br.com.ufrpe.foodguru.R;
 import br.com.ufrpe.foodguru.estabelecimento.GUI.PerfilEstabelecimentoActivity;
 import br.com.ufrpe.foodguru.infraestrutura.persistencia.FirebaseHelper;
 import br.com.ufrpe.foodguru.infraestrutura.utils.Helper;
->>>>>>> ConsertoLogin:app/src/main/java/br/com/ufrpe/foodguru/usuario/GUI/LoginActivity.java
+
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private final FirebaseAuth mAuth = FirebaseHelper.getFirebaseAuth();;
     private EditText edtLoginEmail, edtLoginSenha;
     private ProgressDialog mProgressDialog;
     private final DatabaseReference firebaseReference = FirebaseDatabase.getInstance().getReference();
-    private final String TIPO_CONTA = "tipoConta";
 
 
     @Override

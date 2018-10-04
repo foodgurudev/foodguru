@@ -18,9 +18,9 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import br.com.ufrpe.foodguru.R;
-import br.com.ufrpe.foodguru.infraestrutura.FirebaseHelper;
-import br.com.ufrpe.foodguru.infraestrutura.Helper;
-import br.com.ufrpe.foodguru.infraestrutura.LoginActivity;
+import br.com.ufrpe.foodguru.infraestrutura.persistencia.FirebaseHelper;
+import br.com.ufrpe.foodguru.infraestrutura.utils.Helper;
+import br.com.ufrpe.foodguru.usuario.GUI.LoginActivity;
 
 public class HomeEstabelecimentoActivity extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseHelper.getFirebaseAuth();
@@ -41,7 +41,7 @@ public class HomeEstabelecimentoActivity extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.nav_estabelecimento);
 
         pratosFragment = new PratosFragment();
-        mesasFragment = new MesasFragment();
+        mesasFragment = new MesasFragment(this);
         pedidosFragment = new PedidosFragment();
         administracaoFragment = new AdministracaoFragment();
 
