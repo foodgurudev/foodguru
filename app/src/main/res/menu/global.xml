@@ -4,5 +4,6 @@
         android:id="@+id/menu_action_bar_sair"
         android:orderInCategory="100"
         android:title="Sair"
+        android:icon="@drawable/ic_close"
         app:showAsAction="ifRoom" />
 </menu>
