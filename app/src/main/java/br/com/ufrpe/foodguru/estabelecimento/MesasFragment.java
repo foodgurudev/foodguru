@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import br.com.ufrpe.foodguru.R;
 import br.com.ufrpe.foodguru.estabelecimento.dominio.Mesa;
@@ -29,30 +28,23 @@ public class MesasFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /*
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_mesas, container, false);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_mesas, container, false);
         setupRecycler();
     }
-    */
 
     private void setupRecycler() {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
-        List<Mesa> mesas =  "recupera do fireBase";
-        mAdapter = new MesaAdapter(mesas);
-        mRecyclerView.setAdapter(new MesaAdapter(mesas));
+
         ArrayList<Mesa> mesaLista = new ArrayList();
         mAdapter = new MesaAdapter(mesaLista);
         mRecyclerView.setAdapter(mAdapter);
-
 
 
 
