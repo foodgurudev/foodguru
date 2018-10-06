@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import br.com.ufrpe.foodguru.estabelecimento.dominio.MesaLineHolder;
+import br.com.ufrpe.foodguru.estabelecimento.dominio.Mesa;
 
 import br.com.ufrpe.foodguru.R;
 import br.com.ufrpe.foodguru.estabelecimento.dominio.Mesa;
@@ -23,8 +25,9 @@ public class MesaAdapter extends RecyclerView.Adapter<MesaLineHolder> {
 
     @Override
     public MesaLineHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MesaLineHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.mesa_list_item, parent, false));
+
+        return null;/*new MesaLineHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.mesa_list_item, parent, false));*/
     }
 
     @Override

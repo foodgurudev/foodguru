@@ -13,6 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.content.Context;
+
+import br.com.ufrpe.foodguru.cliente.GUI.MeusDadosClienteFragment;
+import br.com.ufrpe.foodguru.infraestrutura.utils.Helper;
 
 import br.com.ufrpe.foodguru.cliente.EscanearQrCodeFragment;
 import br.com.ufrpe.foodguru.infraestrutura.utils.Helper;
