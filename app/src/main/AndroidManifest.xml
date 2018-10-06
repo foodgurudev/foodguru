@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.ufrpe.foodguru">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,6 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".usuario.GUI.LoginActivity"
+            android:exported="true"
             android:label="Food Guru"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".cliente.GUI.RegistroClienteActivity" />
@@ -21,6 +26,7 @@
         <activity android:name=".estabelecimento.GUI.PerfilEstabelecimentoActivity" />
         <activity
             android:name=".infraestrutura.utils.SplashActivity"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,16 +35,13 @@
             </intent-filter>
         </activity>
         <activity
-<<<<<<< HEAD
-            android:name=".cliente.HomeClienteActivity"
+            android:name=".cliente.GUI.HomeClienteActivity"
             android:label="@string/title_activity_ler_qr_code" />
         <activity
-            android:name=".estabelecimento.HomeEstabelecimentoActivity"
-            android:label="@string/title_activity_home_estabelecimento"></activity>
-=======
-            android:name=".cliente.GUI.LerQrCodeActivity"
-            android:label="@string/title_activity_ler_qr_code"></activity>
->>>>>>> ConsertoLogin
+            android:name=".estabelecimento.GUI.HomeEstabelecimentoActivity"
+            android:label="@string/title_activity_home_estabelecimento" />
+        <activity android:name=".cliente.GUI.EditarDadosClienteActivity" />
+        <activity android:name=".cliente.GUI.AdicionarMesaActivity"></activity>
     </application>
 
 </manifest>

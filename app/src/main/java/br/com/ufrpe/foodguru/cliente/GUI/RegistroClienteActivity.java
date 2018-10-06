@@ -95,7 +95,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
                                 progressDialog.dismiss();
                                 progressDialog.setCanceledOnTouchOutside(true);
                                 Helper.criarToast(RegistroClienteActivity.this
-                                        , "Database Error");
+                                        , task.getException().toString());
                             }
                         }
                     }
@@ -132,7 +132,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements View.O
         }catch (FirebaseAuthUserCollisionException e){
             emailClienteReg.setError("Uma conta com esse email já existe");
         }catch (Exception e){
-            Helper.criarToast(RegistroClienteActivity.this,"Database error");
+            Helper.criarToast(RegistroClienteActivity.this,e.toString());
         }
         return verificador;
     }

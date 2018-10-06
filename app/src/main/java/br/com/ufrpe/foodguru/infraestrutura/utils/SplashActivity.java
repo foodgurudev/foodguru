@@ -9,16 +9,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-<<<<<<< HEAD:app/src/main/java/br/com/ufrpe/foodguru/infraestrutura/SplashActivity.java
 import br.com.ufrpe.foodguru.cliente.HomeClienteActivity;
 import br.com.ufrpe.foodguru.R;
 import br.com.ufrpe.foodguru.estabelecimento.HomeEstabelecimentoActivity;
 import br.com.ufrpe.foodguru.estabelecimento.PerfilEstabelecimentoActivity;
-=======
 import br.com.ufrpe.foodguru.R;
 import br.com.ufrpe.foodguru.usuario.GUI.LoginActivity;
 import br.com.ufrpe.foodguru.infraestrutura.persistencia.FirebaseHelper;
->>>>>>> ConsertoLogin:app/src/main/java/br/com/ufrpe/foodguru/infraestrutura/utils/SplashActivity.java
 
 public class SplashActivity extends AppCompatActivity {
     private final int TEMPO_SPLASH = 1000;
@@ -49,7 +46,6 @@ public class SplashActivity extends AppCompatActivity {
         finish();
     }
 
-<<<<<<< HEAD:app/src/main/java/br/com/ufrpe/foodguru/infraestrutura/SplashActivity.java
     private void abrirTelaCliente(){
         Intent intentAbrirTelaCliente = new Intent(SplashActivity.this, HomeClienteActivity.class);
         startActivity(intentAbrirTelaCliente);
@@ -83,6 +79,4 @@ public class SplashActivity extends AppCompatActivity {
                 });
     }
 }
-=======
-}
->>>>>>> ConsertoLogin:app/src/main/java/br/com/ufrpe/foodguru/infraestrutura/utils/SplashActivity.java
+
