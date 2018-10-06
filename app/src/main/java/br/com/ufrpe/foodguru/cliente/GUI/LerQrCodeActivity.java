@@ -28,7 +28,7 @@ public class LerQrCodeActivity extends AppCompatActivity {
     private FrameLayout mMainFrame;
     private EscanearQrCodeFragment escanearQrCodeFragment;
     private MeusDadosClienteFragment meusDadosClienteFragment;
-
+    /*
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -47,10 +47,11 @@ public class LerQrCodeActivity extends AppCompatActivity {
 
     };
 
-
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
         setContentView(R.layout.activity_ler_qr_code);
 
 
@@ -145,4 +146,6 @@ public class LerQrCodeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LerQrCodeActivity.class);
         startActivity(intent);
     }
-}
+    */
+}}
+

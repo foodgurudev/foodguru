@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import br.com.ufrpe.foodguru.R;
 import br.com.ufrpe.foodguru.estabelecimento.dominio.Mesa;
+import br.com.ufrpe.foodguru.estabelecimento.dominio.MesaLineHolder;
 
 public class MesaAdapter extends RecyclerView.Adapter<MesaLineHolder> {
 
@@ -28,9 +29,11 @@ public class MesaAdapter extends RecyclerView.Adapter<MesaLineHolder> {
 
     @Override
     public void onBindViewHolder(MesaLineHolder holder, int position) {
+        /*
         holder.numero.setText(String.format(Locale.getDefault(), "%s, %d - %s",
                 mesa.get(position).getNumero()
         ));
+        */
 
 
     }
